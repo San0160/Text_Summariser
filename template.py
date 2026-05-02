@@ -25,7 +25,7 @@ list_of_files = [
     "params.ymal",
     "app.py",
     "main.py",
-    "dockerfile"
+    "dockerfile",
     "requirement.txt",
     "setup.py",
     "reseach/trials.ipynb"
