@@ -241,3 +241,6 @@ logs/
 *.csv
 *.arrow
 *.parquet
+
+# artifacts file after data injection pipeline
+artifacts/*

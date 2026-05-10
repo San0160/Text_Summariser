@@ -1,0 +1,9 @@
+# Template for dataset path
+
+artifacts_root: artifacts
+
+data_injection:
+  root_dir: artifacts/data_injection
+  source_URL: https://github.com/entbappy/Branching-tutorial/raw/refs/heads/master/summarizer-data.zip
+  local_data_file: artifacts/data_injection/data.zip
+  unzip_dir: artifacts/data_injection
