@@ -1,6 +1,6 @@
 from Text_summariser.constant import *
 from Text_summariser.utils.common import read_yaml, create_directories
-from Text_summariser.entity import (DatainjectionConfig)
+from Text_summariser.entity import (DatainjectionConfig, DatavalidationConfig)
 
 
 class configurationManager:
@@ -27,3 +27,16 @@ class configurationManager:
         )
 
         return data_injection_config
+    
+    def get_data_validation_config(self) -> DatavalidationConfig:
+        config = self.config.data_validation
+
+        create_directories([config.root_dir])
+
+        data_validation_config = DatavalidationConfig(
+            root_dir = config.root_dir,
+            STATUS_FILE = config.STATUS_FILE,
+            ALL_REQUIRED_FILES = config.ALL_REQUIRED_FILES
+        )
+
+        return data_validation_config
