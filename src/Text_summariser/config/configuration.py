@@ -1,6 +1,6 @@
 from Text_summariser.constant import *
 from Text_summariser.utils.common import read_yaml, create_directories
-from Text_summariser.entity import (DatainjectionConfig, DatavalidationConfig)
+from Text_summariser.entity import (DatainjectionConfig, DatavalidationConfig, DataTransformationConfig)
 
 
 class configurationManager:
@@ -10,9 +10,9 @@ class configurationManager:
         params_filepath = PARAMS_FILE_PATH):
 
         self.config = read_yaml(config_filepath) # read all config and params yaml files
-        self.params = read_yaml(params_filepath)
+        self.params = read_yaml(params_filepath) 
 
-        create_directories([self.config.artifacts_root])
+        create_directories([self.config.artifacts_root])# same upto here for most pipeline
 
     def get_data_injection_config(self) -> DatainjectionConfig:
         config = self.config.data_injection
@@ -40,3 +40,16 @@ class configurationManager:
         )
 
         return data_validation_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path,
+            tokenizer_name = config.tokenizer_name
+        )
+
+        return data_transformation_config
