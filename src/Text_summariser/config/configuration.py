@@ -1,6 +1,6 @@
 from Text_summariser.constant import *
 from Text_summariser.utils.common import read_yaml, create_directories
-from Text_summariser.entity import (DatainjectionConfig, DatavalidationConfig, DataTransformationConfig, ModelTrainerConfig)
+from Text_summariser.entity import (DatainjectionConfig, DatavalidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig)
 
 
 class configurationManager:
@@ -80,3 +80,19 @@ class configurationManager:
         )
 
         return model_trainer_config
+    
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(  # ← Capital M and E and C
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            model_path=config.model_path,
+            tokenizer_path=config.tokenizer_path,
+            metric_file_name=config.metric_file_name
+        )
+
+        return model_evaluation_config
