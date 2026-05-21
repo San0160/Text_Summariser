@@ -248,3 +248,6 @@ This project is licensed under the Apache 2.0 License — see the [LICENSE](LICE
 - [SAMSum Dataset](https://huggingface.co/datasets/samsum) — Samsung Research
 - [HuggingFace Transformers](https://github.com/huggingface/transformers)
 - [T5 Paper](https://arxiv.org/abs/1910.10683) — Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer
+
+## Created by
+- Revanth, Sandeep
