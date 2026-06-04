@@ -228,10 +228,10 @@ docker run -p 8080:8080 text-summariser
 
 ## 🔮 Future Improvements
 
-- Push model weights to HuggingFace Hub for easy sharing
-- Auto-download artifacts from HuggingFace if not found locally
-- Upgrade to `t5-base` or `BART-large` for better ROUGE scores
-- Add CI/CD with GitHub Actions for automated retraining
+- Push model weights to HuggingFace Hub for easy sharing (Better update, pending)
+- Auto-download artifacts from HuggingFace if not found locally (Pending)
+- Upgrade to `t5-base` or `BART-large` for better ROUGE scores (Pending)
+- Add CI/CD with GitHub Actions for automated retraining 
 - Support for longer documents (articles, meeting transcripts)
 - Add a web UI with Gradio or Streamlit
 
