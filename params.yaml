@@ -1,3 +1,7 @@
+transformation:
+  MAX_INPUT_LENGTH: 384
+  MAX_TARGET_LENGTH: 64
+
 TrainingArguments:
   num_train_epochs: 3
   warmup_steps: 500
