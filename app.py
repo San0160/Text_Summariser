@@ -14,22 +14,34 @@ predictor = PredictionPipeline()
 
 @app.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"request": request}
+    )
 
 @app.post("/predict")
 async def predict_route(request: Request, text: str = Form(...)):
     try:
         summary = predictor.predict(text)
-        return templates.TemplateResponse("index.html", {
-            "request": request,
-            "summary": summary,
-            "original": text
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="index.html",
+            context={
+                "request": request,
+                "summary": summary,
+                "original": text
+            }
+        )
     except Exception as e:
-        return templates.TemplateResponse("index.html", {
-            "request": request,
-            "error": str(e)
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="index.html",
+            context={
+                "request": request,
+                "error": str(e)
+            }
+        )
 
 @app.post("/api/summarize")
 async def summarize(text: str):

@@ -5,7 +5,8 @@ from Text_summariser.logging import logger
 from ensure import ensure_annotations # for reduced bugs
 from box import ConfigBox
 from pathlib import Path
-from typing import Any
+import zipfile
+from urllib import request
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -54,4 +55,38 @@ def get_size(path: Path) -> str:
     """
     size_in_kb = round(os.path.getsize(path)/1024)
     return f"~ {size_in_kb} KB"
+
+@ensure_annotations
+def download_model(config):
+
+    model_dir = config.model_path
+    parent_dir = os.path.dirname(model_dir)
+
+    zip_path = os.path.join(parent_dir, "working_model.zip")
+    extract_path = model_dir
+
+    logger.info(f"Checking model directory: {extract_path}")
+    logger.info(f"Directory exists: {os.path.exists(extract_path)}")
+
+    if os.path.exists(extract_path):
+        logger.info("Model already exists. Skipping download.")
+        return
+
+    logger.info("Model not found. Downloading from Hugging Face. This may take several minutes...")
+
+    filename, headers = request.urlretrieve(
+        url=config.model_URL,
+        filename=zip_path
+    )
+
+    logger.info(f"{filename} downloaded successfully.")
+
+    with zipfile.ZipFile(zip_path, "r") as zip_ref:
+        zip_ref.extractall(parent_dir)
+
+    logger.info(f"Model extracted to {extract_path}")
+
+    os.remove(zip_path)
+
+    logger.info("Temporary ZIP removed.")
 
