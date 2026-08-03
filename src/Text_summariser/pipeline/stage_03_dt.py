@@ -9,5 +9,5 @@ class DataTransformationTrainingPipeline:
     def main(self):
         config = configurationManager()
         data_transformation_config = config.get_data_transformation_config()
-        data_transformation = DataTransformation(config = data_transformation_config)
-        data_transformation.convert()
+        data_transformation = DataTransformation(config=data_transformation_config)
+        data_transformation.run()

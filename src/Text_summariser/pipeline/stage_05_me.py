@@ -1,6 +1,6 @@
 # Pipeline
 from Text_summariser.config.configuration import configurationManager
-from Text_summariser.components.data_evaluation import ModelEvaluation
+from Text_summariser.components.model_evaluation import ModelEvaluation
 from Text_summariser.logging import logger
 import os
 

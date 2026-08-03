@@ -1,14 +1,16 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from starlette.responses import Response, RedirectResponse
 import uvicorn
-import os
 
 from Text_summariser.pipeline.prediction import PredictionPipeline
 
-app = FastAPI()
+app = FastAPI(title="Text Summarizer",
+        description="Text Summarization using Google's FLAN-T5",
+        version="1.0.0"
+)
+
 templates = Jinja2Templates(directory="templates")
+predictor = PredictionPipeline()
 
 @app.get("/")
 async def home(request: Request):
@@ -17,8 +19,7 @@ async def home(request: Request):
 @app.post("/predict")
 async def predict_route(request: Request, text: str = Form(...)):
     try:
-        obj = PredictionPipeline()
-        summary = obj.predict(text)
+        summary = predictor.predict(text)
         return templates.TemplateResponse("index.html", {
             "request": request,
             "summary": summary,
@@ -30,13 +31,9 @@ async def predict_route(request: Request, text: str = Form(...)):
             "error": str(e)
         })
 
-@app.get("/train")
-async def train_route():
-    try:
-        os.system("python main.py")
-        return Response(content="Training Successful!!", media_type="text/plain")
-    except Exception as e:
-        return Response(content=f"Error: {e}", media_type="text/plain")
+@app.post("/api/summarize")
+async def summarize(text: str):
+    return {"summary": predictor.predict(text)}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)

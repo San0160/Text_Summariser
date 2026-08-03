@@ -43,13 +43,16 @@ class configurationManager:
     
     def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation
+        params = self.params.transformation
 
         create_directories([config.root_dir])
 
         data_transformation_config = DataTransformationConfig(
             root_dir = config.root_dir,
             data_path = config.data_path,
-            tokenizer_name = config.tokenizer_name
+            tokenizer_name = config.tokenizer_name,
+            MAX_INPUT_LENGTH = params.MAX_INPUT_LENGTH,
+            MAX_TARGET_LENGTH = params.MAX_TARGET_LENGTH
         )
 
         return data_transformation_config
@@ -65,6 +68,8 @@ class configurationManager:
             root_dir = config.root_dir,
             data_path = config.data_path,
             model_ckpt = config.model_ckpt,
+            model_path = config.model_path,
+            model_URL = config.model_URL,
             num_train_epochs = params.num_train_epochs,
             warmup_steps = params.warmup_steps,
             per_device_train_batch_size = params.per_device_train_batch_size,

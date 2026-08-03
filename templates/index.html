@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Summarise</title>
+  <title>Text Summarise | Flan T5</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -124,7 +124,7 @@
       line-height: 1.7;
       padding: 16px;
       resize: vertical;
-      min-height: 180px;
+      min-height: 240px;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -276,7 +276,7 @@
 <body>
   <div class="wrapper">
     <header>
-      <div class="badge">AI Powered</div>
+      <div class="badge">Google FLAN-T5</div>
       <h1>Make it<br/><span>shorter.</span></h1>
       <p class="subtitle">Paste any text — get a clean, concise summary instantly.</p>
     </header>
@@ -319,7 +319,7 @@
       </form>
     </div>
 
-    <footer>summarise · built with fastapi</footer>
+    <footer>Powered by Google FLAN-T5 • FastAPI</footer>
   </div>
 
   <script>
@@ -330,14 +330,20 @@
 
     function showLoading() {
       document.getElementById('loading').style.display = 'flex';
-    }
 
+      const btn = document.querySelector('button[type="submit"]');
+
+      btn.disabled = true;
+      btn.innerHTML = 'Summarising <span class="arrow">...</span>';
+    }
+    
     function copy() {
       const text = document.getElementById('summaryText').innerText;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector('.copy-btn');
         btn.textContent = 'copied ✓';
-        setTimeout(() => btn.textContent = 'copy to clipboard', 2000);
+        setTimeout(() => {
+            btn.textContent = 'copy to clipboard';}, 2000);
       });
     }
 

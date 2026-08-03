@@ -13,14 +13,29 @@ class ModelTrainerTrainingPipeline:
         config = configurationManager()
         model_trainer_config = config.get_model_trainer_config()
     
-        model_path = os.path.join(model_trainer_config.root_dir, "t5-samsum-final")
+        model_path = os.path.join(
+            model_trainer_config.model_path,
+            "working_model"
+        )
     
-        if not os.path.exists(model_path):
-            print("No saved model — training now...")
-            model_trainer = ModelTrainer(config=model_trainer_config)
-            model_trainer.train()
-        else:
+        model_trainer = ModelTrainer(config=model_trainer_config)
+    
+        if os.path.exists(model_path):
             print("Model already exists — skipping training!")
+    
+        else:
+            print("Model not found.")
+    
+            try:
+                model_trainer.download_model()
+    
+                print("Model downloaded successfully.")
+    
+            except Exception:
+                raise RuntimeError(
+                    "\nModel download failed.\n"
+                    "Please ask the administrator to update the ModelTrainer code."
+                )
 
 
 

@@ -10,11 +10,41 @@ from transformers import (
     Seq2SeqTrainer
 )
 from datasets import load_from_disk
+from pathlib import Path
+from urllib import request
+from Text_summariser.logging import logger
+import zipfile
 from Text_summariser.entity import ModelTrainerConfig
+
+
 
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         self.config = config
+
+    def download_model(self):
+
+        zip_path = os.path.join(self.config.model_path, "working_model.zip")
+        extract_path = os.path.join(self.config.model_path, "working_model")
+
+        # Model already extracted
+        if os.path.exists(extract_path):
+            logger.info("Model already exists. Skipping download.")
+            return
+
+        # Download zip
+        filename, headers = request.urlretrieve(
+            url=self.config.model_URL,
+            filename=zip_path
+        )
+
+        logger.info(f"{filename} downloaded successfully.")
+
+        # Extract
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall(self.config.model_path)
+
+        logger.info(f"Model extracted to {extract_path}")
 
     def train(self):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -73,12 +103,12 @@ class ModelTrainer:
             eval_dataset=dataset_samsum_pt["validation"],
             tokenizer=tokenizer,
             data_collator=data_collator,
-            compute_metrics=compute_metrics      # ← no brackets!
+            compute_metrics=compute_metrics
         )
 
         trainer.train()
 
         # Save model
-        model.save_pretrained(os.path.join(self.config.root_dir, "t5-samsum-final"))
+        model.save_pretrained(os.path.join(self.config.root_dir, "T5-Small-model"))
         # Save tokenizer
         tokenizer.save_pretrained(os.path.join(self.config.root_dir, "tokenizer"))

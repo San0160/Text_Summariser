@@ -23,13 +23,17 @@ class DataTransformationConfig:
     root_dir: Path
     data_path: Path
     tokenizer_name: str
+    MAX_INPUT_LENGTH: int
+    MAX_TARGET_LENGTH: int
 
 
 @dataclass(frozen = True)
 class ModelTrainerConfig:
     root_dir: Path
     data_path: Path
+    model_path: Path
     model_ckpt: str
+    model_URL: str
     num_train_epochs: int
     warmup_steps: int
     per_device_train_batch_size: int
