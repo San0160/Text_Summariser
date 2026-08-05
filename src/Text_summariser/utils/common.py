@@ -7,8 +7,6 @@ from box import ConfigBox
 from pathlib import Path
 import zipfile
 from urllib import request
-import torch
-from transformer import auto
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
