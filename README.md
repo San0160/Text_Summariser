@@ -158,8 +158,6 @@ Add screenshots of: - Home page - Summary page - Mobile view
 
 # 👨‍💻 Author
 
-**Tripurari Pandit**
+**Sandeep Kumar**
 
 GitHub: https://github.com/San0160
-
-LinkedIn: Add your LinkedIn URL
