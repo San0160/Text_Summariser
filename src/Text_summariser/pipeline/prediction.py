@@ -1,6 +1,5 @@
 from Text_summariser.config.configuration import configurationManager
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from Text_summariser.utils.common import download_model
 import torch
 
 
@@ -8,20 +7,14 @@ class PredictionPipeline:
 
     def __init__(self):
 
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")       
+
         self.config = configurationManager().get_model_evaluation_config()
         
-        download_model(self.config)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_path)
 
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            self.config.model_path
-        )
-
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(
-            self.config.model_path
-        ).to(self.device)
-
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(self.config.model_path).to(self.device)
+            
     def predict(self, text):
 
         if not text.strip():

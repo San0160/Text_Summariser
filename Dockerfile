@@ -10,6 +10,9 @@ COPY . .
 
 RUN pip install -e .
 
+# Download the model during image build
+RUN python src/Text_summariser/download_model.py
+
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8080
