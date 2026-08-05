@@ -15,9 +15,9 @@
 
 ## 🌐 Live Demo
 
-Replace this with your Railway URL:
+**Railway URL:**
 
-`https://YOUR-RAILWAY-APP.up.railway.app`
+`https://textsummariser-production.up.railway.app`
 
 **GitHub Repository**
 
