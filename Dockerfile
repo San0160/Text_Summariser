@@ -10,8 +10,7 @@ COPY . .
 
 RUN pip install -e .
 
-# Download the model during image build
-RUN python src/Text_summariser/download_model.py
+RUN python -m Text_summariser.download_model
 
 ENV PYTHONUNBUFFERED=1
 
